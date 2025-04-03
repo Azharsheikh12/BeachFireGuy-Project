@@ -1,30 +1,77 @@
-<<<<<<< HEAD
-# beachfireguy
-=======
-# README
+# BeachFireGuy - Beach Rental Service Platform
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![BeachFireGuy Logo](https://via.placeholder.com/150x50?text=BeachFireGuy+Logo) *(add your actual logo path here)*
 
-Things you may want to cover:
+## Overview
 
-* Ruby version
-	3.0.0	
-* Rails Version
-	7.0.4
-* System dependencies
+BeachFireGuy is a rental service platform that allows users to book beach fire setups and rent equipment based on their chosen date. The application provides a seamless booking experience with integrated calendar management for administrators.
 
-* Configuration
+## Key Features
 
-* Database creation
+### For Users
+- 📅 Date-based equipment rental booking system
+- 🔍 Browse available rental equipment
+- 💳 Secure payment processing
+- 📧 Booking confirmation notifications
 
-* Database initialization
+### For Administrators
+- 🗓 Google Calendar integration for reservation tracking
+- 📊 Comprehensive admin dashboard
+- 📦 Inventory management system
+- 👥 User activity monitoring
 
-* How to run the test suite
+## Technology Stack
 
-* Services (job queues, cache servers, search engines, etc.)
+### Backend
+- **Ruby** 3.0.0
+- **Rails** 7.0.4
+- **PostgreSQL** (Database)
 
-* Deployment instructions
+### Frontend
+- **Bootstrap 5** (UI Framework)
+- **Hotwire** (Modern frontend approach)
 
-* ...
->>>>>>> a62df482acca128daeb3ba84b5dae381d4ee04de
+### Infrastructure
+- **Docker** (Containerization)
+- **AWS S3** (File storage)
+
+### Integrations
+- Google Calendar API
+- Stripe Payment Processing
+
+## Screenshots
+
+*(Add actual screenshot paths here)*
+![Booking Page](screenshots/booking.png) 
+![Admin Dashboard](screenshots/admin.png)
+
+## Installation
+
+### Prerequisites
+- Ruby 3.0.0
+- PostgreSQL
+- Node.js
+- Yarn
+
+### Setup Instructions
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/BeachFireGuy.git
+cd BeachFireGuy
+
+# Install dependencies
+bundle install
+yarn install
+
+rails assets:precompile
+
+# Set up database
+rails db:create db:migrate db:seed
+
+# Configure environment variables
+cp .env.example .env
+# Edit .env with your actual credentials
+
+# Start the server
+rails server
