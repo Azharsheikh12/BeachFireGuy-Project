@@ -1,7 +1,5 @@
 # BeachFireGuy - Beach Rental Service Platform
 
-![BeachFireGuy Logo](https://via.placeholder.com/150x50?text=BeachFireGuy+Logo) *(add your actual logo path here)*
-
 ## Overview
 
 BeachFireGuy is a rental service platform that allows users to book beach fire setups and rent equipment based on their chosen date. The application provides a seamless booking experience with integrated calendar management for administrators.
