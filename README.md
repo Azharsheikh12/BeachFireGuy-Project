@@ -39,7 +39,6 @@ BeachFireGuy is a rental service platform that allows users to book beach fire s
 
 ## Screenshots
 
-*(Add actual screenshot paths here)*
 ![Booking Page](screenshots/booking.png) 
 ![Admin Dashboard](screenshots/admin.png)
 
