@@ -1,0 +1,251 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require jquery-ui
+ *= require bootstrap-datetimepicker
+ */
+@import "bootstrap";
+
+.accordion-item .accordion-header button.accordion-button {
+  background-image: none;
+  background-color: #1074bc;
+  color: #fff;
+}
+.accordion-item .accordion-header button.accordion-button:focus {
+  box-shadow: none;
+  border: 0;
+}
+.btn-primary {
+  background-image: none;
+}
+button.btn.btn-primary:hover {
+  background-color: #007bff !important;
+  border-color: #007bff !important;
+  background-image: none;
+}
+input.btn.btn-primary {
+  background-color: blue !important;
+  background-image: none !important;
+}
+.btn-success {
+  color: #fff !important;
+  text-decoration: none !important;
+}
+.footer {
+  background-color: #1074bc;
+}
+.footer {
+  background-color: #1074bc;
+}
+a.btn.btn-primary {
+  text-decoration: none;
+}
+.footer .footer-inner h2 {
+  text-align: left;
+  color: #fff;
+  margin: 0;
+}
+.social-media ul {
+  margin: 0;
+  padding: 0;
+}
+.carousel-caption {
+  bottom: 3rem;
+}
+.footer-inner h2 {
+  font-size: 20px;
+  font-weight: 500;
+  padding-bottom: 10px;
+}
+.social-media ul li a {
+  font-size: 18px;
+  color: #fff;
+}
+.social-media {
+  text-align: right;
+}
+.copy-right-text {
+  text-align: left;
+}
+.social-media ul li {
+  list-style-type: none;
+  display: inline-block;
+  margin-right: 15px;
+}
+.copy-right-text p {
+  margin: 0;
+  color: #fff;
+}
+.social-media ul li {
+  list-style-type: none;
+}
+.footer .footer-inner p {
+  color: #fff;
+  text-align: left;
+  margin: 0;
+}
+.footer .footer-inner ul {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+.footer .footer-inner ul li {
+  color: white;
+  padding-bottom: 10px;
+  list-style-type: disc;
+}
+.footer .footer-inner ul li a {
+  text-decoration: none;
+  color: #fff;
+  background-color: #1074bc;
+}
+.form-left .form-group input {
+  width: 100%;
+  -webkit-appearance: none;
+  background-color: #eee;
+  max-width: 100%;
+  border-width: 0;
+  border-radius: 0;
+  color: #999;
+  font-size: 14px;
+  padding: 16px;
+  line-height: 1.7em;
+  border-style: solid;
+}
+.form-right .form-group input {
+  width: 100%;
+  -webkit-appearance: none;
+  background-color: #eee;
+  max-width: 100%;
+  border-width: 0;
+  border-radius: 0;
+  color: #999;
+  font-size: 14px;
+  padding: 16px;
+  line-height: 1.7em;
+  border-style: solid;
+}
+.form-left .form-group {
+  margin-bottom: 20px;
+}
+.form-left h1,
+.form-right h1 {
+  font-size: 30px;
+}
+.card-body.order-details p.extra-text {
+  margin: 0;
+}
+.form-left input.btn.btn-primary {
+  border-radius: 5px;
+  padding: 12px 20px;
+  border: 0;
+}
+.form-left {
+  padding-bottom: 15px;
+}
+.card-body.order-details p {
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+.card-body.order-details strong {
+  margin-right: 5px;
+  font-weight: bold;
+}
+.form-left h1.card-title,
+.form-right h1.card-title {
+  font-size: 24px;
+  padding: 5px 0 10px 0;
+}
+.extra-subtotal {
+  display: flex;
+}
+.extra-subtotal p {
+  width: 39%;
+}
+.card-body.order-details .table-data p {
+  margin-bottom: 2px;
+}
+.card-body.order-details .table-data {
+  margin-bottom: 10px;
+}
+.card-body.order-details .extra-subtotal p {
+  margin: 0;
+}
+.total-text {
+  display: flex;
+  border-top: 1px solid #ccc;
+  padding-top: 5px;
+  margin-top: 20px;
+}
+.card-body.order-details .total-text p {
+  font-weight: bold;
+  margin: 0;
+}
+.card-body.order-details .total-text strong {
+  width: 39%;
+}
+.card-body.order-details p.delivery-text {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #5e6469;
+}
+@media screen and (max-width: 767px) {
+  .form-left .form-group .row .col-md-6:first-child {
+    margin: 15px 0;
+  }
+  .form-left .form-group .row .col-md-4:nth-child(2) {
+    margin: 15px 0;
+  }
+  .footer-inner {
+    margin-bottom: 25px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .copy-right-text {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .social-media {
+    text-align: center;
+  }
+}
+
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+  margin-left: 0rem;
+  width: 100%;
+}
+.bg {
+  background-color: #1074bc !important; /* Dark gray background */
+}
+li {
+  margin-left: 20px;
+}
+
+.dropdown:hover > .dropdown-menu {
+  display: block;
+  background-color: #1074bc;
+  border: #1074bc;
+}
+
+.dropdown > .dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+  pointer-events: none;
+}
+
+.images {
+  object-fit: cover;
+}

@@ -1,0 +1,348 @@
+<div class="image-container" style="position: relative; margin-bottom: 0px;">
+  <%= image_tag("cover.jpg", style: "height: 200px; width: 100%;", class: "img-fluid", alt: "...") %>
+  <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <h1 style="color: black; font-size: 25px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 10px;">Checkout</h1>
+  </div>
+</div>
+
+<% if @users.errors.any? %>
+      <ul class = "list-unstyled">
+           <% @users.errors.full_messages.each do |message| %>
+             <div class ="bg text-white mt-1 p-2"> 
+                <li>
+                  <%= message %>
+                </li>
+             </div>
+           <% end %>
+          </ul> 
+  <% end %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4 shadow">
+        <div class="card-body">
+          <div class="table-container mt-4">
+            <h5 class="card-title">Package Details</h5>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><%= @cart.product %></td>
+                  <td><%= @cart.price %></td>
+                  <td><%= @cart.quantity %></td>
+                  <td><%= @cart.subtotal %></td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Subtotal:</strong> <%= @cart.subtotal %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4 shadow p-3">
+        <div id="product-details">
+          <%= render partial: 'partials/product_list', locals: { cart: @cart, products: @products } %>   
+        </div>
+      </div>
+
+      <div class="card mb-4 shadow">
+        <div class="card-body">
+          <div id="cart-details">
+           <%= render partial: 'partials/cart_details', locals: { cart: @cart } %>
+          </div>
+          <p><strong>Apply Coupon:</strong> 
+          <div class="discount-div">
+          <input type="text" id="coupen"> 
+          <%= button_tag 'Apply',onclick:"applyCoupen(#{@cart.id})", class:"btn btn-primary", id:"apply_button" %>
+          </div>
+          <div id = "discount_price">
+          </div>
+        </div>
+      </div>
+      
+      <div class="card mb-4 shadow">
+        <div class="card-body">
+          <div class="package-details">
+            <div class="package-card">
+              <div class="package-info">
+                <h2>Payment mode</h2>
+                <p>Pay with cash upon delivery</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="card mb-4 shadow">
+        <div class="card-body">
+          <% if flash[:error].present? %>
+            <div class="alert alert-danger">
+              <%= flash[:error] %>
+            </div>
+            <%flash[:error] = nil%>
+          <% end %>
+     <%= form_with(model: @users, local: true) do |form| %>
+            <%= form.hidden_field :cart_id, value:@cart.id, class: "form-control" %>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-left contact-form">
+                <h1 class="card-title">Billing Details</h1>
+                   
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <%= form.label :first_name %>
+                          <%= form.text_field :first_name, class: "form-control" %>
+                  
+                        </div>
+                        <div class="col-md-6">
+                          <%= form.label :last_name %>
+                          <%= form.text_field :last_name, class: "form-control" %>
+                          
+                        </div>
+                      </div>
+                    </div>
+
+                     <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <%= form.label :email %>
+                          <%= form.email_field :email, class: "form-control" %>
+                        </div>
+                      </div>
+                      
+
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-12">
+                      <%= form.label :company_name %>
+                      <%= form.text_field :company_name, class: "form-control" %>
+                      
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <%= form.label :city %>
+                          <%= form.text_field :city, class: "form-control" %>
+                           
+                        </div>
+                        <div class="col-md-4">
+                          <%= form.label :state %>
+                          <%= form.text_field :state, class: "form-control" %>
+                         
+                        </div>
+                        <div class="col-md-4">
+                          <%= form.label :zip_code %>
+                          <%= form.text_field :zip_code, class: "form-control" %>
+                           
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <%= form.label :phone %>
+                          <%= form.text_field :phone, class: "form-control" %>
+                         
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <%= form.label :steet_address %>
+                          <%= form.text_field :steet_address, class: "form-control" %>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <%= form.label :closest_steet_address %>
+                          <%= form.text_field :closest_steet_address, class: "form-control" %>
+                         
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <%= form.label :total_guests %>
+                          <%= form.text_field :total_guests, class: "form-control" %>
+                          
+                        </div>
+                      </div>
+                    </div>
+                
+                    <%unless @users.active%>
+                      <div class="form-check">
+                        <%= form.check_box :active, id: "active", onclick: "myFunction()", class: "form-check-input", checked: "false"%>
+                        <%= form.label "Create an account?" %>
+                      </div>
+                      <div class="form-group" id="password" style="display:none;">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <%= form.label :password %>
+                            <%= form.password_field :password, class: "form-control" %>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    <%end%>
+                   
+                    </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-right additional-form">
+                         <h1 class="card-title">Additional information</h1>
+                         <form>
+                           <div class="form-group">
+                             <div class="row">
+                               <div class="col-md-12">
+                                 <%= form.label :additional_notes %>
+                                 <%= form.text_area :additional_notes, class: "form-control" %>
+                    
+                               </div>
+                             </div>
+                           </div>
+                         </form>
+                      </div>
+                    </div>
+              <div class="form-left">
+                   <p class="w-100 mt-3 mb-3">Your personal data will be used to process your order, support your
+                    experience throughout this website, and for other purposes described in 
+                    our <%= link_to "privacy policy", "/privacy_policies/index",class:"text-decoration-none",target:"_blank" %>.</p>
+                   
+                   <div class="form-check">
+                        <%= form.check_box :terms_of_service, class: "form-check-input", checked: "false" , required:true %>
+                        <%= form.label " I have read and agree to the website" %><%= link_to " terms and conditions *", "/term_services/index",class:"text-decoration-none",target:"_blank" %>
+                      </div>                  
+
+                    <div class="actions mt-4">
+                      <%= form.submit "Checkout", class: "btn btn-primary" %>
+                    </div>
+                  </div>
+      <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function myFunction() {
+  var checkBox = document.getElementById("active");
+  // Get the output text
+  var active = document.getElementById("password");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    active.style.display = "block";
+  } else {
+    active.style.display = "none";
+  }
+}
+
+function applyCoupen(cart_id){
+var coupen = $('#coupen').val()
+
+if (coupen != '') {
+$.ajax({
+      url: "/apply_coupen",
+      method: 'GET',
+	    dataType: "script",
+      data: {'coupen': coupen, cart: cart_id},
+       success: function(response) {
+       Swal.fire({
+      confirmButtonColor: "#1074bc",   
+       icon: 'success',
+       text: 'Successfully Applied coupon code!',
+       width:'15em',
+       })
+         document.getElementById("apply_button").disabled = true;
+
+        },
+        error: function(xhr, status, error) {
+
+          Swal.fire({
+          icon: 'error',
+          text: 'Invalid coupon code!',
+          width:'15em',
+          confirmButtonColor: "#1074bc",   
+
+        })
+        }
+    });}
+else
+{
+   Swal.fire({
+          icon: 'error',
+          text: "Coupon code can't be blank!",
+          width:'15em',
+          confirmButtonColor: "#1074bc",   
+
+        })
+}
+}
+</script>
+<style>
+  .card .product {
+    margin-left: 10px; /* Add left margin */
+    margin-right: 10px; /* Add right margin */
+  }
+  .contact-form .form-control{
+    height: 44px;
+    background-color: #eeeeeea6!important;
+    border-radius: 10px!important;
+  }
+  .additional-form textarea{
+    height: 100px;
+    background-color: #eeeeeea6!important;
+    border-radius: 10px!important;
+    border: none;
+  }
+  .discount-div{
+    display: flex;
+    gap: 10px;
+  }
+  .discount-div input{
+    width: 100%;
+    max-width: 250px;
+    height: 44px;
+    background-color: #eeeeeee4;
+    border-radius: 10px;
+    box-shadow: none;
+    border: none;
+  }
+  @media screen and (max-width: 575px){
+  .discount-div input{
+    margin-top: 0px !important;
+  }
+  }
+</style>

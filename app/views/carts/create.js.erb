@@ -1,0 +1,5 @@
+// Update the cart details section
+$("#cart-details").html("<%= j(render partial: 'cart_details', locals: { cart: @cart }) %>");
+
+// Clear the form after successful submission
+$("#product-form")[0].reset();

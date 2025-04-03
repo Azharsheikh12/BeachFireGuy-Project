@@ -1,0 +1,169 @@
+
+<style>
+.carousel-control-prev, .carousel-control-next{
+    width: 40px!important;
+    height: 40px!important;
+    border-radius: 50%!important;
+    background-color: #1074bc !important;
+    font-size: 35px!important;
+    opacity: 1 !important;
+    top: 105px !important;
+    color: white!important;
+}
+.btn-product_list{
+    width:100px;
+    height:30px;
+    font-size: 13px;
+    text-align: center;
+}
+    .custom-card{
+      text-align: start;
+      padding: 7px 10px 10px;
+    }
+    .product-price{
+        margin-bottom: 5px;
+    }
+    .owl-carousel .owl-dots.disabled, .owl-carousel .owl-nav.disabled{
+        display: block!important;
+    }
+.image-box {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 2% 2% 0 0;
+}
+.images {
+  height: 15em;
+  background-size: cover; 
+  background-position: center center; 
+  background-repeat: no-repeat;
+  border-radius: 2% 2% 0 0;
+  transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  -o-transition: all 1s ease;
+}
+.images:hover {
+    transform: scale(1.2);
+    overflow: hidden;
+    border-radius: 2%;
+}
+.cart-image-box {
+  width: 20%;
+  overflow: hidden;
+  border-radius: 2%;
+  float: left;
+  margin: 1%;
+}
+
+.cart-images {
+  height: 7em;
+  background-size: cover; 
+  background-position: center center; 
+  background-repeat: no-repeat;
+}
+
+</style>
+<script>
+function add_to_cart(product_id,cart_id,add,product_type){
+	 $.ajax({
+      url: "/add_to_cart/" + product_id + "/" + cart_id + "/" + product_type, 
+      method: 'GET',
+	  dataType: "script",
+      success: function(data) {
+         $('#card-details').html(data);
+	  if(add!="add_more"){
+		Swal.fire({
+       icon: 'success',
+	   title: 'Added!',
+       text: 'Your Product has been added!',
+       width:'15em',
+	   timer: 2000,
+	  showConfirmButton: false
+       })}
+      }
+    });
+}
+
+function remove_to_cart(product_id,cart_id,product_type){
+	 $.ajax({
+      url: "/remove_to_cart/" + product_id + "/" + cart_id + "/" + product_type, 
+      method: 'GET',
+	  dataType: "script",
+      success: function(data) {
+         $('#card-details').html(data);
+		 	
+      }
+    });
+}
+function delete_item(product_id,cart_id,product_type){
+	 $.ajax({
+      url: "/delete_item/" + product_id + "/" + cart_id + "/" + product_type, 
+      method: 'GET',
+	  dataType: "script",
+      success: function(data) {
+         $('#card-details').html(data);
+      }
+    });
+}
+
+$(function() {
+	var owl = $(".owl-carousel");
+ owl.owlCarousel({
+    autoplay:true,
+    autoplayTimeout:2000,
+    autoplayHoverPause:true,
+    loop:true,
+    margin:10,
+    nav:true,
+    navText: ["<div class='carousel-control-prev'>‹</div>", "<div class='carousel-control-next'>›</div>"],
+ 	dots: false,
+    responsive:{
+        0:{
+            items:2
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:6
+        }
+    }
+  });
+});
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+	<div class="home-demo col-12">
+				<h3 class="mb-3">Frequently Bought Together</h3>
+				<div class="owl-carousel owl-theme listing-section">
+
+        <%@products.each do |product|%>
+            <div class="item card">
+                    <% if product.thumbnail.attached? %>
+                        <div class="image-box">
+                        <%= image_tag rails_blob_url(product.thumbnail), class: "card-img-top img-fluid images",style: "width: 600px; height: 140px;"  %>
+                      </div>
+                    <% else %>
+                     <div class="image-box">
+                        <%= image_tag "client.jpeg", class: "img-fluid images",alt: "image",style: "width: 600px; height: 140px;"%>
+                    </div>
+                    <% end %>
+            
+                    <div class="card-body custom-card">
+                        <p class="product-price"><%= product.item %></p>
+                        <p class="product-price">Price: <%= product.price %></p>
+                        <div class="text-center">
+                          <%= button_tag 'Add to cart',class: "btn btn-primary text-white text-decoration-none btn-product_list" ,onclick:"add_to_cart(#{product.id},#{cart.id},'add','product_list')"%>					
+                        </div>
+                    </div>
+                </div>
+        <%end%>
+    </div>
+</div>

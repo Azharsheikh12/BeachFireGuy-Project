@@ -1,0 +1,39 @@
+[1mdiff --git a/app/views/partials/_product_list.html.erb b/app/views/partials/_product_list.html.erb[m
+[1mindex 8962b07..fcbfc56 100644[m
+[1m--- a/app/views/partials/_product_list.html.erb[m
+[1m+++ b/app/views/partials/_product_list.html.erb[m
+[36m@@ -87,10 +87,10 @@[m [m$(function() {[m
+             items:1[m
+         },[m
+         600:{[m
+[31m-            items:4[m
+[32m+[m[32m            items:5[m
+         },[m
+         1000:{[m
+[31m-            items:4[m
+[32m+[m[32m            items:5[m
+         }[m
+     }[m
+   });[m
+[36m@@ -103,16 +103,16 @@[m [m$(function() {[m
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>[m
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>[m
+ [m
+[31m-			<div class="home-demo mb-5 col-12">[m
+[31m-				<h3 class="mb-3">Frequently bought together</h3>[m
+[31m-				<div class="owl-carousel owl-theme">[m
+[32m+[m[32m<div class="home-demo mb-5 col-12">[m
+[32m+[m	[32m<h3 class="mb-3">Frequntly Bought Together</h3>[m
+[32m+[m	[32m<div class="owl-carousel owl-theme">[m
+ [m
+         <%@products.each do |product|%>[m
+             <div class="item card ">[m
+                     <% if product.thumbnail.attached? %>[m
+[31m-                        <%= image_tag rails_blob_url(product.thumbnail), class: "card-img-top img-fluid",style: "width: 500px; height: 250px;"  %>[m
+[32m+[m[32m                        <%= image_tag rails_blob_url(product.thumbnail), class: "card-img-top img-fluid",style: "width: 400px; height: 150px;"  %>[m
+                     <% else %>[m
+[31m-                        <%= image_tag "client.jpeg", class: "img-fluid",alt: "image",style: "width: 500px; height: 250px;"%>[m
+[32m+[m[32m                        <%= image_tag "client.jpeg", class: "img-fluid",alt: "image",style: "width: 400px; height: 150px;"%>[m
+                     <% end %>[m
+             [m
+                     <div class="card-body">[m

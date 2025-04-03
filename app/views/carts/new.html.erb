@@ -1,0 +1,122 @@
+<style>
+    /* Your CSS styles */
+    .product-carousel {
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .product-list {
+      display: flex;
+      width: fit-content; /* Add this line to make the container width fit the content */
+      margin: 0 auto; /* Center the product list horizontally */
+      transition: transform 0.5s;
+    }
+
+    .product {
+      flex-shrink: 0; /* Prevent the product from shrinking */
+      margin-right: 10px; /* Add some space between products */
+    }
+
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .carousel-navigation {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      z-index: 1;
+    }
+
+    .carousel-prev-btn,
+    .carousel-next-btn {
+/*      font-size: 100px;*/
+      background: none;
+      border: black;
+      color: green;
+      cursor: pointer;
+    }
+
+    .carousel-prev-btn {
+      margin-left: 10px;
+    }
+
+    .carousel-next-btn {
+      margin-right: 10px;
+    }
+</style>
+  
+<div class="image-container" style="position: relative; margin-bottom: 40px;">
+  <%= image_tag("cover.jpg", style: "height: 200px; width: 100%;", class: "img-fluid", alt: "...") %>
+  <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <h1 style="color: black; font-size: 30px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 10px;">Your Cart Details</h1>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="card mb-4 shadow p-3">
+    <%= render partial: 'partials/product_addons', locals: { cart: @cart } %>
+  </div>
+</div>
+  
+  <div class="container">
+   <div class="row">
+   <div class="col-md-8"> 
+      <div class="card mb-4">
+          <div class="card-body col-12">
+            <h5 class="card-title">Package Details</h5>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><%= @cart.product %></td>
+                  <td><%= @cart.price %></td>
+                  <td><%= @cart.quantity %></td>
+                  <td><%= @cart.subtotal %></td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Subtotal:</strong> <%= @cart.total %></p>
+          </div>
+        </div>
+         <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Cart Details</h5>
+              <div id="cart-details">
+                <%= render partial: 'partials/cart_details', locals: { cart: @cart} %>
+              </div>
+              <%= link_to 'Proceed to Checkout', new_user_path(@cart), :class => "btn btn-success" %> 
+            </div>
+          </div> 
+    </div>
+    <div class="col-md-4">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Location Details</h5>
+              <div id="cart-details">
+                        <h6 class="product-name"><%= @service_location.location_name %></h6>
+                    <% if @service_location.thumbnails.attached? %>
+                        <%= image_tag rails_blob_url(@service_location.thumbnails.last), class: "card-img-top img-fluid images",style: "width: 500px; height: 250px;"  %>
+                    <% else %>
+                        <%= image_tag "client.jpeg", class: "img-fluid images",alt: "image",style: "width: 500px; height: 250px;"%>
+                    <% end %>
+                        <p class="product-price mt-4"><%= @service_location.location_details %></p>
+              </div>
+            </div>
+          </div>
+    </div>
+    </div>
+  </div>

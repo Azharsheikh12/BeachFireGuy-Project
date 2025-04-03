@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+      .inline{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around
+      }
+      .margin{
+        padding-top: 3mm;
+        padding-bottom: 3mm;
+        width: 80mm;
+        height: 80mm;
+      }
+      .zoom {
+        transition: transform .2s;
+      }
+
+     .zoom:hover {
+       transform: scale(1.2); 
+      }
+     .images{
+       object-fit: cover;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="image-container" style="position: relative; margin-bottom: 10px;">
+       <%= image_tag("cover.jpg", style: "height: 200px; width: 100%;", class: "img-fluid", alt: "...") %>
+       <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+          <h1 style="color: black; font-size: 25px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 10px;">Gallery</h1>
+       </div>
+    </div>
+
+  <div class="container">
+    <div class = "inline pt-5 mb-5">
+      <% @galleries.each do |gallery| %>  
+       <%= image_tag rails_blob_url(gallery.thumbnail), class: "margin zoom images"%>
+      <% end %>
+    </div>
+  </div>
+  </body>
+</html>
+

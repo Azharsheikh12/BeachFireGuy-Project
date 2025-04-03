@@ -1,0 +1,18 @@
+<div class="image-container" style="position: relative; margin-bottom: 40px;">
+  <%= image_tag("cover.jpg", style: "height: 200px; width: 100%;", class: "img-fluid", alt: "...") %>
+  <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <h1 style="color: black; font-size: 25px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 10px;">Privacy Policies</h1>
+  </div>
+</div>
+
+
+
+<div class="card w-75 mx-auto mb-3">
+    <div class="card-body">
+        <div class="shadow p-3  bg-white rounded ">
+            <div class="p-3  bg-white card-text">
+              <span class="card-text"><%= simple_format(@privacy_policy&.description) %></span> 
+            </div>
+        </div>
+    </div>
+</div>

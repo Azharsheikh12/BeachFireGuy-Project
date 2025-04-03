@@ -1,0 +1,90 @@
+<div class="image-container" style="position: relative; margin-bottom: 40px;">
+  <%= image_tag("cover.jpg", style: "height: 200px; width: 100%;", class: "img-fluid", alt: "...") %>
+  <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <h1 style="color: black; font-size: 25px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 10px;">Order Recieved</h1>
+  </div>
+</div>
+<div class="container">
+  <div style="text-align: center;">
+    <h3 class="mb-3">Thank you, your order has been received</h3>
+    <p><i class="fa fa-check-circle" style="font-size:70px;color:green;"></i></p>
+  </div>
+
+
+   <div class="card mb-4  mt-5">
+      <div class="card-body">
+       <h5 class="card-title"></h5>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Order No.</th>
+                <th>Date</th>
+                <th>Total Amount</th>
+                <th>Payment Mode</th>
+                <!-- <th>Payment Status</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><%= @orders.id %></td>
+                <td><%= @orders.created_at&.strftime("%B %d, %Y") %></td>
+                <td><%= @orders.total_amount %></td>
+                <td><%= @orders.payment_mode %></td>
+                <!-- <td><%#= @orders.payment_status %></td> -->
+              </tr>
+           </tbody>
+          </table>
+        </div>
+      </div>
+   </div>
+
+  <div class="card mb-4">
+      <div class="card-body order-details">
+        <p class="delivery-text">pay with cash upon delivery</p>
+        <h3 class="card-title">Order Details</h3>
+            <div class="table-responsive">
+                 <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Package Name</th>
+                        <th>Package Price</th>
+                        <th>Qty</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% product = @orders.cart.package%>
+                         <tr>
+                          <td><%= product.package_name %></td>
+                          <td><%= product.package_price %></td>
+                          <td>1</td>
+                        </tr>
+                    </tbody>
+                  </table>      
+           </div>
+
+                <p><strong>Package Name:</strong> <%= product.package_name %></p>
+                <p><strong>Booked Date:</strong> <%= @orders.setup_time.strftime("%Y-%m-%d")%></p>
+                <p><strong>Time-Slot:</strong> <%= @orders.setup_time_slot %></p>
+                <p><strong>Description:</strong> <%= product.description %></p>
+                <p><strong>Qty:</strong>1</p>
+                 <div class="extra-subtotal">
+                    <p class="extra-text"><strong>Extras:</strong></p>
+                    <p><%= @orders.cart.items.pluck(:price).sum %></p>
+                 </div>
+
+                   <div class="table-data">
+                      <% @orders.cart.items.each do |product| %>
+                          <p><%= product.name %> <span> x (<%= product.quantity %>)</span></p>
+                          <p></p>
+                      <% end %>
+                    </div>
+                  <% total = @orders.cart.total %>
+                    <p><strong>Payment Method:</strong> <%= @orders.payment_mode %></p>
+                  <div class="total-text">
+                    <strong>Total:</strong>
+                    <p><%= total %></p>
+                  </div>
+    	  </div>
+     </div>
+</div>

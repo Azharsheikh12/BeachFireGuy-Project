@@ -1,0 +1,64 @@
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% cart.items.distinct.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.price %></td>
+        <td>
+        
+        <% if product.product_addon_id.present? %>
+        <%= button_tag onclick: "add_to_cart(#{product.product_addon_id}, #{cart.id}, 'add_more', 'product_addons')", class: "btn btn-primary" do %>
+            <i class="fa fa-plus-square"></i>
+        <% end %>
+        <% elsif product.product_id.present? %>
+        <%= button_tag onclick: "add_to_cart(#{product.product_id}, #{cart.id}, 'add_more', 'product_list')", class: "btn btn-primary" do %>
+            <i class="fa fa-plus-square"></i>
+        <% end %>
+        <% end %>
+          
+        <%= product.quantity %> 
+        <% if product.product_addon_id.present? %>
+        <%= button_tag onclick: "remove_to_cart(#{product.product_addon_id}, #{cart.id}, 'product_addons')", class: "btn btn-primary" do %>
+            <i class="fa fa-minus-square"></i>
+        <% end %>
+        <% elsif product.product_id.present? %>
+        <%= button_tag onclick: "remove_to_cart(#{product.product_id}, #{cart.id}, 'product_list')", class: "btn btn-primary" do %>
+            <i class="fa fa-minus-square"></i>
+        <% end %>
+        <% end %>
+          </td>  
+        <td> 
+        
+        <% if product.product_addon_id.present? %>
+        <%= button_tag onclick: "delete_item(#{product.product_addon_id}, #{cart.id},'product_addons')", class: "btn btn-primary" do %>
+        <i class="bi bi-trash"></i>
+        <% end %>
+        <% elsif product.product_id.present? %>
+        <%= button_tag onclick: "delete_item(#{product.product_id}, #{cart.id},'product_list')", class: "btn btn-primary" do %>
+        <i class="bi bi-trash"></i>
+        <% end %>
+        <% end %>
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ <p><strong>Subtotal:</strong> <%= @cart.items.pluck(:price).sum %></p>
+ <p><strong>Total Price:</strong> <%=  @cart.items.pluck(:price).sum + @cart.subtotal %></p>
+
+
+
+
+
+
+

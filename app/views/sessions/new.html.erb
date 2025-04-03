@@ -1,0 +1,102 @@
+
+
+
+
+
+<!-- <%# if @users.errors.any? %>
+  <div id="error_explanation">
+    <h2><%#= pluralize(@users.errors.count, "error") %> prohibited this users from being saved:</h2>
+    <ul>
+      <%# @users.errors.full_messages.each do |message| %>
+        <li><%#= message %></li>
+      <%# end %>
+    </ul>
+  </div>
+<%# end %> -->
+
+<!--<%= form_tag login_path do %>
+  <div class="field">
+    <%= label_tag :email %>
+    <%= email_field_tag :email, '', class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= label_tag :encrypted_password %>
+    <%= password_field_tag :encrypted_password, '', class: 'form-control' %>
+  </div>
+
+  <%= submit_tag 'Login', class: 'btn btn-primary' %>
+<% end %>-->
+<div class="image-container" style="position: relative; margin-bottom: 0px;">
+  <%= image_tag("cover.jpg", style: "height: 200px; width: 100%;", class: "img-fluid", alt: "...") %>
+  <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <h1 style="color: black; font-size: 25px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 10px;">Login to Beach Fire Guy</h1>
+  </div>
+</div>
+
+<div class="container mt-3 mb-5">
+  <div class="row" style="padding-top: 20px;">
+    <div class="col-md-4">
+      <div id="all-locations-map" ></div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h1 class="card-title text-center ">Login</h1>
+
+            <% if flash[:error].present? %>
+              <div class="alert alert-danger">
+                <%= flash[:error] %>
+              </div>
+            <% end %>
+            <%= form_tag login_path do %>
+            <div class="form-group mb-3">
+             <i class="fas fa-envelope mr-2"></i>
+                  <%= label_tag :email %>
+                  <%= email_field_tag :email, '', class: 'form-control w-100 mb-3',placeholder:"Enter Your Email"  %>
+             </div>
+              
+           
+            <div class="form-group">
+             <i class="fas fa-lock mr-2"></i>
+                <%= label_tag :password %>
+                <%= password_field_tag :password, '', class: 'form-control w-100 ' , placeholder:"Enter Your Password"%>
+             </div>
+              
+             <div class="actions mb-3" style="margin-top: 20px;">
+              <%#= submit_tag 'Login', class: 'btn btn-primary' %> 
+              <%= button_to 'Login', login_path, method: :post, class: "btn btn-primary" %>
+            </div> 
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  
+  /* CSS for success message */
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+/* CSS for error message */
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+</style>

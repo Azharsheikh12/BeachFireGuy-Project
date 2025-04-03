@@ -1,0 +1,92 @@
+<div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+  <ol class="carousel-indicators">
+    <% @packages.each_with_index do |package, index| %>
+      <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= 'active' if index.zero? %>"></li>
+    <% end %>
+  </ol>
+  <div class="carousel-inner">
+    <% @packages.each_with_index do |package, index| %>
+      <div class="carousel-item <%= 'active' if index.zero? %>">
+        <% if package.thumbnail.attached? %>
+          <%= image_tag rails_blob_url(package.thumbnail), class: "d-block w-100", style: "height: 550px;" %>
+        <% else %>
+          <%= image_tag "client.jpeg", class: "d-block w-100", style: "height: 600px;" %>
+        <% end %>
+        <div class="carousel-caption d-md-block">
+          <div class="col d-flex justify-content-center">
+            <div class="card" style="max-width: 500px;">
+              <% if package.thumbnail.attached? %>
+                <%= image_tag rails_blob_url(package.thumbnail), class: "card-img-top", style: "width: 100%; height: 250px;", alt: "..." %>
+              <% else %>
+                <%= image_tag "client.jpeg", class: "card-img-top", style: "width: 500px; height: 200px;", alt: "..." %>
+              <% end %>
+              <div class="card-body">
+                <h5 class="card-title"><%= package.package_name %></h5>
+                <p class="card-text"><%= package.description %></p>
+                <a href="<%= new_location_path(package_id: package.id) %>" class="btn btn-primary">Book Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </a>
+</div>
+
+
+
+<style>
+
+    .card-body {
+        padding: 15px 10px 20px 10px;
+    }
+    .card-title {
+      margin-bottom: 0.5rem;
+      font-family: 'Pacifico';
+    }
+
+    .card-text {
+      margin-bottom: 11px;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        background-color: transparent; /* Set the background color to transparent */
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        
+        background-color: #212529; /* Set the background color of the icons to transparent */
+        filter: invert(1); /* Invert the color of the icons */
+    }
+
+    .carousel-control-prev:focus,
+    .carousel-control-next:focus {
+        outline: none; /* Remove the focus outline */
+    }
+
+    a, a:link, a:visited {
+    color: white;
+    # text-decoration: underline;
+    }
+
+    .carousel-control-next {
+     right: 10; 
+    }
+
+    .h5 {
+      font-family: "Lucida Console", "Courier New", monospace;
+      font-style: bold 
+    }
+</style>
+
+

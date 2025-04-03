@@ -1,0 +1,291 @@
+
+  <div>
+    <div class="card-body d-flex justify-content-center col-md col-12 card-filter ">
+
+        <%= form_with url: "/filter_packages", method: :get do |form| %>
+
+        <div class="btn-group col-sm-2">
+          <i class="fa-solid fa-layer-group"></i>
+          <%= form.select :name, options_for_select(Service.all.pluck(:name).map { |key| [key.humanize, key] }), {}, class: "form-select" %>
+        </div> 
+
+        <div class="btn-group col-sm-2">
+          <i class="fa-solid fa-location-dot"></i>
+          <%= form.select :location_name,options_for_select(ServiceLocation.all.pluck(:location_name).map { |key| [key.humanize, key] }), {}, class: "form-select" %>
+        </div>
+          
+        <div class="btn-group">
+              <%= form.date_field :setup_time, selected: Date.today, min: Date.today, max: 2.year.from_now, class: "form-select", required: true, id: 'date-select' %>
+        </div>
+            
+        <div class="btn-group col-sm-3">
+          <i class="fa-solid fa-clock"></i>
+          <%= form.select :setup_time_slot, options_for_select([], nil),{prompt: 'Select Time-Slot', selected: '', disabled: ''}, class: "form-select", id: 'setup-time-slot-select' %>
+        </div>
+          
+          <div class="btn-group search-btn" >
+          <%= button_to 'Search', packages_path, method: :get, class: "btn btn-primary" %>
+        </div> 
+      <% end %>
+    </div>
+  </div>
+ 
+<% @packages.each_with_index do |package, index| %>
+  <div class="container">
+    <div class="card bg-dark-subtle mt-4">
+      <% if package.thumbnail.attached? %>
+        <%= image_tag rails_blob_url(package.thumbnail), class: "card-img-top  img-h" %>
+      <% else %>
+        <%= image_tag "client.jpeg", class: "card-img-top img-h"%>
+      <% end %>
+      <div class="card-body">
+        <div class="text-section">
+          <h5 class="card-title  text-black"><%= package.package_name %></h5>
+          <p class="card-text"><%= package.description %></p>
+          <div class="text-black fw-bold">$<%= package.package_price %></div> 
+          <div class="mt-2">
+            <!-- Update the collapse ID to be unique for each package -->
+            <a class="btn btn-primary bg-transparent btn-1" role="button" data-toggle="collapse" href="#collapseExample<%= index %>" aria-expanded="false" aria-controls="collapseExample<%= index %>">
+              See More Details
+            </a>
+            <!-- Update the collapse ID to be unique for each package -->
+            <div class="collapse" id="collapseExample<%= index %>" aria-expanded="false">
+              <p class="card-text"><%= package.extra_details %></p>
+            </div>        
+          </div>
+        </div>
+        <div class="cta-section">
+          <a href="<%= new_cart_path(package: package, service_location: @service_location) %>" class="btn btn-primary text-white mt-sm-5 mx-3">Book Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<style>
+.btn-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+.btn-group i{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+label {
+  font-weight: bold;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  width: 100%;
+  position: absolute;
+  left: 7px;
+}
+.form-select {
+  padding-left: 30px!important;
+}
+
+
+.btn-1:hover {
+   background: rgb(0,3,255);
+background: linear-gradient(0deg, rgba(0,3,255,1) 0%, rgba(2,126,251,1) 100%);
+}
+
+
+form input[type=date] {
+    width: calc(100% - 2px);
+    border-radius: 5px;
+}
+.card-title {
+  margin-bottom: 0.5rem;
+  font-family: 'Pacifico';
+}
+
+.card-text {
+  margin-bottom: 4px;
+
+}
+
+.h5 {
+  font-family: "Lucida Console", "Courier New", monospace;
+  font-style: bold 
+   color: #fff;
+}
+.img-h{
+  height:165px;
+}
+
+.card {
+  max-width: 60em;
+  flex-direction: row;
+  background-color: #f9f7f7;
+  border: 0;
+  box-shadow: 0 7px 7px rgba(0, 0, 0, 0.18);
+  margin: 3em auto;
+}
+@media(max-width: 576px){
+  .card{
+    flex-direction: column;
+  }
+  .card img {
+    width: 100%!important;
+    height: 250px;
+  }
+
+.text-section {
+  width: 100%!important;
+}
+.cta-section {
+  position: absolute;
+  right: 0px;
+}
+}
+.card.dark {
+  color: #fff;
+}
+.card.card.bg-light-subtle .card-title {
+  color: dimgrey;
+}
+
+.card img {
+  width: 200px;
+  margin: auto;
+  padding: 0.5em;
+  border-radius: 0.7em;
+  object-fit: cover;
+}
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 10px 20px 10px;
+  position: relative;
+}
+.text-section {
+  width: 60%;
+}
+.cta-section {
+  max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.cta-section .btn {
+  padding: 0.3em 0.5em;
+  /* color: #696969; */
+}
+.card.bg-light-subtle .cta-section .btn {
+  background-color: #898989;
+  border-color: #898989;
+}
+.btn-group{
+    width: 200px;
+}
+.btn-group.search-btn{
+    width: 120px;
+}
+@media screen and (max-width: 576px) {
+.card {
+    font-size: 0.9em;
+  }
+.card-filter {
+  width: 280px;
+  margin: 0 auto;
+}
+.btn-group{
+    margin-bottom: 10px;
+    width: 280px;
+}
+}
+
+</style>
+
+
+<script>
+
+
+$(document).ready(function() {
+  $('#locations-select').change(function() {
+    $('#show-location-button').show();
+    var selectedLocation = $('#locations-select option:selected').val();
+    
+    // Retrieve location details via AJAX if necessary, or use the data from the server-side if available
+    var locationDetails = locations.find(function(location) {
+      return location.location_name == selectedLocation;
+    });
+        
+    var content = '<h3>' + locationDetails.location_name + '</h3>';
+    content += '<p>' + locationDetails.location_details + '</p>';
+    content += '<p>' + locationDetails.beach_details + '</p>';
+    
+    swal.fire({
+      html: content,
+      confirmButtonText: 'Close'
+    });
+  });
+  
+  $('#show-location-button').click(function(e) {
+    e.preventDefault(); // Prevent form submission
+    
+    var selectedLocation = $('#locations-select option:selected').val();
+    
+    // Retrieve location details via AJAX if necessary, or use the data from the server-side if available
+    var locationDetails = locations.find(function(location) {
+      return location.location_name == selectedLocation;
+    });
+    
+    
+    var content = '<h3>' + locationDetails.location_name + '</h3>';
+    content += '<p>' + locationDetails.location_details + '</p>';
+    content += '<p>' + locationDetails.beach_details + '</p>';
+    
+    swal.fire({
+      html: content,
+      confirmButtonText: 'Close'
+    });
+  });
+
+});
+
+// Initialize the locations array with data from Rails
+var locations = <%= raw ServiceLocation.all.to_json %>;
+
+ const dateSelect = document.getElementById('date-select');
+  const setupTimeSlotSelect = document.getElementById('setup-time-slot-select');
+
+  // Define the setup time slots once
+  const setupTimeSlots = ['10:00 am - 10:30 am','11:00 am - 11:30 am','12:00 pm - 12:30 pm', '1:00 pm - 1:30 pm', '2:00 pm - 2:30 pm', '3:00 pm - 3:30 pm', '4:00 pm - 4:30 pm', '5:00 pm - 5:30 pm', '6:00 pm - 6:30 pm', '7:00 pm - 7:30 pm'];
+
+  dateSelect.addEventListener('change', function() {
+    const selectedDate = this.value;
+
+    // Clear the existing options
+    setupTimeSlotSelect.innerHTML = '';
+
+    // Get the current date and time
+    // const currentDate = new Date();
+    // const currentTime = currentDate.getHours() + ':' + ('0' + currentDate.getMinutes()).slice(-2);
+    const currentDate = new Date();
+    let hours = currentDate.getHours();
+    let minutes = ('0' + currentDate.getMinutes()).slice(-2);
+    let meridiem = 'AM';
+
+    if (hours > 12) {
+      hours -= 12;
+      meridiem = 'PM';
+    }
+
+    const currentTime = hours + ':' + minutes + ' ' + meridiem;
+
+    // Filter out past time slots if the selected date is today
+    const filteredTimeSlots = (selectedDate === '<%= Date.today.strftime("%Y-%m-%d") %>') ? setupTimeSlots.filter(timeSlot => timeSlot >= currentTime) : setupTimeSlots;
+
+    // Populate the setup time slot select field with the filtered options
+    filteredTimeSlots.forEach(function(timeSlot) {
+      const option = document.createElement('option');
+      option.value = timeSlot;
+      option.text = timeSlot;
+      setupTimeSlotSelect.add(option);
+    });
+  });
+</script>

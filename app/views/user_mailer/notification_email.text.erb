@@ -1,0 +1,3 @@
+Hello <%= @user.first_name %>,
+
+<%= SetEmailContent.where(title: "Order request").pluck(:content).first.to_s.html_safe  %>

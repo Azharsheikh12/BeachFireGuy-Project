@@ -1,0 +1,39 @@
+<div class="container mb-5 mt-4">
+  <div class="card-body">
+    <h1 class="card-title">Package Details</h1>
+    <div class="package-details">
+      <%# @packages.each do |package| %>
+      <div class="package-card" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+        <div class="package-info">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid #ccc;">
+                <th style="padding: 5px;">Locations</th>
+                <td style="padding: 5px;">Mission Bay, Pacific Beach, La Jolla, Mission Beach, Dana Hotel, Coronado</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #ccc;">
+                <th style="padding: 5px;">Package Name</th>
+                <td style="padding: 5px;"><%= @packages.package_name %></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #ccc;">
+                <th style="padding: 5px;">Description</th>
+                <td style="padding: 5px;"><%= @packages.description %></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #ccc;">
+                <th style="padding: 5px;">Price</th>
+                <td style="padding: 5px;"><%= @packages.package_price %></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #ccc;">
+                <th style="padding: 5px;">Details</th>
+                <td style="padding: 5px;"><%= @packages.extra_details %></td>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <%# end %>
+    </div>
+  </div>
+</div>

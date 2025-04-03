@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"> -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Oswald:wght@500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+<%# 
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet"> %>
+    <style>
+        /* Custom CSS for cake shop theme */
+        .navbar {
+            background-color: #1074bc !important; /* Dark gray background */
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-family: 'Pacifico', sans-serif; /* Replace 'Arial' with your desired font family */
+        }
+
+        .navbar-brand {
+            color: #FAF3EB !important; /* White text color */
+            font-size: 20px;
+            font-family: 'fantasy';
+/*            font-weight: bold;*/
+            text-decoration: none;
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            flex-grow: 1;
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 15px;
+        }
+
+        .navbar-nav .nav-item a {
+            color: white !important; /* Set the desired text color */
+            font-size: 18px;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .navbar-nav .nav-item a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 100%;
+            height: 2px;
+            background-color: white; /* Set the desired line color */
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .navbar-nav .nav-item a:hover::after,
+        .navbar-nav .nav-item a:focus::after {
+            transform: scaleX(1);
+        }
+
+        .navbar-toggler {
+            border-color: green;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("client.jpeg"); /* Replace with your icon image */
+            width: 25px;
+            height: 25px;
+            background-size: cover;
+        }
+
+        .logo-img {
+            width: 100px; /* Adjust the width to your desired size */
+            height: auto; /* Automatically adjust the height while maintaining the aspect ratio */
+        }
+
+        @media (max-width: 576px) {
+            .navbar-nav .nav-item {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+
+        .topbar {
+            font-family: 'Oswald', sans-serif; /* Replace 'Arial' with your desired font family */
+        }
+
+        .topbar .text-uppercase{
+            font-size: 18px;
+        }
+        .topbar span {
+            font-family: 'Oswald', sans-serif; /* Replace 'Verdana' with your desired font family */
+            font-size: 14px;
+        }
+
+        /* Additional styles */
+        .bi-envelope,
+        .bi-phone-vibrate {
+            color: #1074bc; /* Set the desired icon color */
+        }
+
+        .fas.fa-fire {
+            color: black; /* Set the desired icon color */
+        }
+
+        .text-primary,
+        .text-dark {
+            color: black; /* Set the desired text color */
+        }
+
+        .text-uppercase {
+            text-transform: uppercase;
+        }
+
+        .text-white {
+            color: white; /* Set the desired text color */
+        }
+
+        .py-3 {
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+        }
+
+        .bg-primary {
+            background-color: white !important; /* Set the desired primary background color */
+            color: white; /* Set the desired primary text color */
+        }
+
+        .bg-secondary {
+            background-color: white !important; /* Set the desired secondary background color */
+            color: dimgray !important; /* Set the desired secondary text color */
+        }
+        a.navbar-brand.logo {
+            display: none;
+        }
+        @media screen and (max-width: 991px) {
+            a.navbar-brand.logo {
+                display: inline-block;
+                position: absolute;
+                left: 20px;
+                top: 8px;
+            }
+        }
+        
+    </style>
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid d-none d-lg-block topbar">
+        <div class="row gx-0">
+            <div class="col-lg-4 text-center bg-secondary py-3">
+                <div class="d-inline-flex align-items-center justify-content-center">
+                    <i class="bi bi-envelope fs-3 me-3"></i>
+                    <div class="text-start">
+                        <h6 class="text-uppercase mb-1">Email Us</h6>
+                        <span>TheBeachFireGuy@Gmail.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center bg-primary border-inner py-3">
+                <div class="d-inline-flex align-items-center justify-content-center">
+                    <a href="/services/new" class="navbar-brand">
+                        <%= image_tag('blue.png', alt: 'Beach Fire Guy Logo', class: 'logo-img') %>
+                        <h1 class="m-0 text-uppercase text-white"></h1>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center bg-secondary py-3">
+                <div class="d-inline-flex align-items-center justify-content-center">
+                    <i class="bi bi-phone-vibrate fs-3 me-3"></i>
+                    <div class="text-start">
+                        <h6 class="text-uppercase mb-1">Call Us</h6>
+                        <span>+1 (858) 405-6391</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+     <a class="navbar-brand logo" href="/services/new">
+        <img src="https://sandiegobonfires.com/wp-content/uploads/2022/04/blue.png" alt="Beach Fire Guy Logo" class="logo-img" style="width: 60px">
+    </a>
+  <span class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+   <i class='fas fa-bars' style='font-size:36px'></i>
+  </span>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
+        
+        <div class="navbar-nav ml-auto">
+
+            <a class="nav-item nav-link active" href="/services/new">Home</a>
+            <a class="nav-item nav-link active" href="/service_locations/index">Locations</a>
+            <a class="nav-item nav-link active" href="/galleries">Gallery</a>
+            <a class="nav-item nav-link active" href="/faqs/index">Faqs</a>
+            <a class="nav-item nav-link active" href="/contacts/new">Contacts us</a>
+
+            <!-- <%# if user_signed_in? %>
+            <a class="nav-item nav-link active" href="logout_path", :method=>'delete' >Logout</a>
+                <%#= link_to "Log out", destroy_user_session_path, :method=>'delete'%>
+            <%# else %>
+            <a class="nav-item nav-link active" href="/login">login</a>
+                <%#= link_to "login", new_user_session_path %>
+            <%# end %> -->
+
+           <div class="float-right">
+            <% if user_signed_in? %>
+                <%= link_to "Logout",logout_path, method: :destroy, class: "nav-item nav-link active" %>
+                <% else %>
+                <%= link_to "Login", login_path, class: "nav-item nav-link active" %>
+                <% end %>
+           </div>
+           
+
+        </div>
+    </div>
+</nav>
+<!-- Navbar End -->
+
+  <script>
+        // Check if the page has already been reloaded
+        var isPageReloaded = sessionStorage.getItem('isPageReloaded');
+
+        // If the page has not been reloaded, reload the page and set isPageReloaded to true
+        if (!isPageReloaded) {
+            sessionStorage.setItem('isPageReloaded', true);
+            location.reload();
+        }
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
+    <!-- <script src="js/main.js"></script> -->
+</body>
+
+</html>

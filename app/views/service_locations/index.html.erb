@@ -1,0 +1,80 @@
+<div class="image-container" style="position: relative; margin-bottom: 40px;">
+  <%= image_tag("cover.jpg", style: "height: 200px; width: 100%;", class: "img-fluid", alt: "...") %>
+  <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <h1 style="color: black; font-size: 25px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 10px;">Locations</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="card" style="background-image: url('<%= asset_path('mapbg.jpg') %>'); background-size: cover; background-position: center;">
+    <div class="card-body" style="text-align: center; color: black;">
+      <h1 class="card-title">Choose a Location on the Map</h1>
+      <p class="card-text">Explore real images and get directions</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row mb-5 mt-4">
+      <div id="all-locations-map" style="height: 500px; width: 100%"></div>
+    </div>
+</div>
+
+<script>
+  function initMap() {
+    var allLocationsMap = new google.maps.Map(document.getElementById("all-locations-map"), {
+      center: new google.maps.LatLng(<%= @service_locations.first.latitude %>, <%= @service_locations.first.longitude %>),
+      zoom: 10
+    });
+
+    <% @service_locations.each_with_index do |location, index| %>
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(<%= location.latitude %>, <%= location.longitude %>),
+        map: allLocationsMap
+      });
+
+      // Add a click event listener to the marker
+      marker.addListener("click", function() {
+        allLocationsMap.setCenter(marker.getPosition());
+        allLocationsMap.setZoom(12);
+
+        // Set the content of the info window with the location information, images, and "Get Directions" button
+        var content = '<div class="card beach-details">' +
+          '<div class="card-body">' +
+          '<div class="shadow p-3 mb-5 bg-white rounded">' +
+          '<h5 class="card-title"><%= location.location_name %></h5>' +
+          '<p class="card-text"><%= location.location_details %></p>' +
+          '<p class="card-text"><%= location.beach_details.to_s.html_safe %></p>' +
+
+        // Loop through the images and create <img> elements
+          '<div class="beach-image">'
+        <% location.thumbnails.each do |thumbnail| %>
+          content += '<img src="<%= url_for(thumbnail) %>" style="width: 100%; height: auto;">';
+        <% end %>
+
+        content += '<button onclick="window.open(\'https://www.google.com/maps/dir/Current+Location/<%= location.latitude %>,<%= location.longitude %>\')" class="btn btn-primary">Get Directions</button>' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+          content: content
+        });
+
+        infowindow.open(allLocationsMap, marker); // Open the info window at the marker's position
+      });
+    <% end %>
+  }
+
+  // Call initMap when the page finishes loading
+  window.addEventListener("load", initMap);
+
+  // Call initMap again when navigating through the navigation bar
+  document.addEventListener("turbo:load", initMap);
+
+  if (!sessionStorage.getItem('firstVisit')) {
+    sessionStorage.setItem('firstVisit', 'true');
+    location.reload();
+  }
+</script>

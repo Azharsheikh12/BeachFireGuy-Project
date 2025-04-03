@@ -1,0 +1,96 @@
+<h1>Packages#show</h1>
+<p>Find me in app/views/packages/show.html.erb</p>
+
+<div class="image-container" style="position: relative; margin-bottom: 40px;">
+  <%= image_tag("beach-cover.jpg", style: "height: 200px; width: 100%;", class: "img-fluid", alt: "...") %>
+  <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <h1 style="color: black; font-size: 25px;">Package Details</h1>
+  </div>
+</div>
+
+
+<script src="/assets/owl.carousel.min.js"></script>
+<div class="card">
+  <div class="card-body">
+    <div class="shadow p-3 mb-5 bg-white rounded">
+      <div id="all-locations-map" style="height: 400px;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initMap() {
+    var allLocationsMap = new google.maps.Map(document.getElementById("all-locations-map"), {
+      center: new google.maps.LatLng(<%= @service_locations.first.latitude %>, <%= @service_locations.first.longitude %>),
+      zoom: 10
+    });
+
+    var infoWindows = []; // Array to store info windows
+
+    <% @service_locations.each_with_index do |location, index| %>
+      var marker<%= index %> = new google.maps.Marker({
+        position: new google.maps.LatLng(<%= location.latitude %>, <%= location.longitude %>),
+        map: allLocationsMap,
+        icon: {
+          url: '<%= asset_path("bonfire.png") %>',
+          scaledSize: new google.maps.Size(30, 30)
+        },
+        title: '<%= location.location_name %>'
+      });
+
+      var images<%= index %> = [
+        <% location.thumbnails.each do |thumbnail| %>
+          "<%= url_for(thumbnail) %>",
+        <% end %>
+      ];
+
+      var content<%= index %> = '<div style="position: relative; display: inline-block;">';
+
+      // Loop through the images and create <img> elements
+      images<%= index %>.forEach(function(image) {
+        content<%= index %> += '<img src="' + image + '" style="width: 300px; height: auto;">';
+      });
+
+      content<%= index %> += '<button class="get-directions-btn" data-location-lat="<%= location.latitude %>" data-location-lng="<%= location.longitude %>">Get Directions</button></div>';
+
+      var infowindow<%= index %> = new google.maps.InfoWindow({
+        content: content<%= index %>
+      });
+
+      marker<%= index %>.addListener("click", function() {
+        closeAllInfoWindows();
+        infowindow<%= index %>.open(allLocationsMap, marker<%= index %>);
+      });
+
+      infoWindows.push(infowindow<%= index %>); // Add info window to the array
+    <% end %>
+
+    // Function to close all info windows
+    function closeAllInfoWindows() {
+      infoWindows.forEach(function(infoWindow) {
+        infoWindow.close();
+      });
+    }
+  }
+
+  // Handle button click to get directions
+  document.addEventListener("DOMContentLoaded", function() {
+    var getDirectionsButtons = document.getElementsByClassName("get-directions-btn");
+
+    Array.prototype.forEach.call(getDirectionsButtons, function(button) {
+      button.addEventListener("click", function() {
+        var locationLat = this.getAttribute("data-location-lat");
+        var locationLng = this.getAttribute("data-location-lng");
+
+        // Open Google Maps with the selected location
+        var url = "https://www.google.com/maps/dir/?api=1&destination=" + locationLat + "," + locationLng;
+        window.open(url, "_blank");
+      });
+    });
+  });
+</script>
+
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script> -->
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCalmy6jQmJysfyzpxExVmCdIf-YzbMQPc&callback=initMap" async defer></script>

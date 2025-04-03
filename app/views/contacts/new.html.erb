@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+      .inline{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around
+      }
+      .margin{
+        padding-top: 3mm;
+        padding-bottom: 3mm;
+        width: 80mm;
+        height: 80mm;
+      }
+      .zoom {
+        transition: transform .2s;
+      }
+
+     .zoom:hover {
+       transform: scale(1.2); 
+      }
+      img{
+        height: 120px; width:140px;
+      }
+      textarea.form-control {
+        min-height: calc(4em + 0.75rem + 2px);
+        width: 100%
+      }
+      form input[type=text], form input[type=password], form input[type=email], form input[type=number], form input[type=url], form input[type=tel], form input[type=date], form input[type=time], form textarea {
+        width: 100%
+      }
+      .row {
+        /* --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 1.5rem; */
+        display: flex;
+        flex-wrap: wrap;
+        /* margin-top: calc(-1 * var(--bs-gutter-y)); */
+        /* margin-right: calc(-1.5rem * var(--bs-gutter-x)); */ */
+        margin-left: calc(-1.5rem* var(--bs-gutter-x)); */
+      }
+      
+    </style>
+ 
+  <div class="image-container" style="position: relative; margin-bottom: 40px;">
+      <%= image_tag("cover.jpg", style: "height: 200px; width: 100%;", class: "img-fluid", alt: "...") %>
+      <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+          <h1 style="color: black; font-size: 25px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 10px;">Contacts us</h1>
+      </div>
+  </div>
+
+
+    <% if @contact.errors.any? %>
+     <ul class = "list-unstyled">
+           <% @contact.errors.full_messages.each do |message| %>
+             <div class ="bg text-white mt-1 p-2"> 
+                <li>
+                  <%= message %>
+                </li>
+             </div>
+           <% end %>
+          </ul> 
+    <% end %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="container mb-5">
+        <div class="accordion ">
+           <% if Gallery.last.blank? %>
+            <div>
+              <%= image_tag("contact_image.jpeg", style: "height: 350px; width:550px;", class: "img-fluid rounded-3 shadow images", alt: "...") %>
+            </div>
+          <% else %>
+            <div>
+                <%= image_tag rails_blob_url(Gallery.last.thumbnail), style: "height: 350px; width:550px;", class: "img-fluid rounded-3 shadow images", alt: "..." %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="container mb-5 mt-4">
+
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="mt-3 rounded-3">
+            <div class="container">
+              <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="card-body">
+                  <div class="text-center ">
+                    <p class="h4 mb-4"> We are here to create absolute magic for your party!<p>
+                    <p class="mb-5 ">Wedding receptions, corporate outings, family reunions, birthday parties </p>
+                    <p class="h4 mb-4"> -you name it and we can deliver.<p>
+                    <p>We can recommend the perfect location and set up for any size group.</p>
+                    <p class="h5 mt-5 font-weight-light">Please give us a call to get a custom quote!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer font-small mdb-color lighten-3 pt-4 bg-dark text-center text-white">
+    <div class="container ">
+          <div class="row">
+            <div class="col-lg-2 col-md-12 mb-4">
+                  <% if Gallery.first.blank? %>
+                    <div class="view overlay z-depth-1-half">
+                      <%= image_tag "gallery3.jpeg", class: "images"%>
+                    </div>
+                  <% else %>
+                    <div class="view overlay z-depth-1-half">
+                      <%= image_tag rails_blob_url(Gallery.first.thumbnail), class: "images"%>
+                    </div>
+                  <% end %>
+              </div>
+
+              <div class="col-lg-4 col-md-6 mb-4 mt-4">
+                  <span><strong class="h3" >For same-day fires please call us now</strong></span>
+              </div>
+              
+              
+              <div class="col-lg-3 col-md-6 mb-4 mt-4">
+                <span><p class=" h5">Get Quick Support</p></span>
+                <p class="h3"><i class="bi bi-telephone"></i>  858-405-6391</p>
+              </div>
+            
+
+              <div class="col-lg-3 col-md-12 mb-3 mt-4">
+                <button type="submit" class="btn btn-primary mb-4 mt-2 ">Get Started<span class="bi bi-arrow-right"></span></button>
+              </div>
+          </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-5 mb-5">
+   <p class="h5 mb-5">  We take pride in providing the best experience and quality beach fire rentals. !<p>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-sm-6 ">
+      <div class="container mt-3">
+        <div class="accordion" id="accordionExample">
+          <% Faq.all.each_with_index do |faq, index| %>
+            <div class="accordion-item" style>
+              <h2 class="accordion-header" id="heading<%= index + 1 %>">
+                <button class="accordion-button <%= index == 0 ? '' : 'collapsed' %>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= index + 1 %>" aria-expanded="<%= index == 0 ? 'true' : 'false' %>" aria-controls="collapse<%= index + 1 %>">
+                  <%= faq.question %>
+                </button>
+              </h2>
+              <div id="collapse<%= index + 1 %>" class="accordion-collapse collapse <%= index == 0 ? 'show' : '' %>" aria-labelledby="heading<%= index + 1 %>" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong><%= faq.question %></strong> <%= faq.answer %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-6  ">
+      <div class="container mt-3">
+          <div class="card rounded-3 shadow">
+            <div class="card-body ">
+              <h3 class="mb-md-4 px-md-2">Send a Message</h3>
+                <%= form_with(model: @contact, url: contacts_path, local: true) do |form| %>
+                  <div class="row">
+                    <div class="col-md-6 mb-4 ">
+                      <%= form.text_field :first_name, placeholder: "First Name", class: "form-control wt-100"%>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <%= form.text_field :last_name,  placeholder: "Last Name",class: "form-control wt-100" %>
+                    </div>
+                  </div>
+                  <div class="form-outline mb-4">
+                   <%= form.email_field :email, placeholder: "Email Address", class: "form-control" %>
+                  </div>
+              
+                  <div class="form-outline mb-4">
+                    <%= form.text_field :subject, placeholder: "Subject", class: "form-control" %>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                      <%= form.text_area :message, placeholder: "Your Message Here...", class: "form-control" %>             
+                  </div>
+                          
+                <div class="actions" style="margin-top: 20px;">
+                  <%= button_to 'Submit', contacts_path, method: :post, class: "btn btn-success btn-primary" %>
+                </div> 
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="border">
+    <div class = "inline">
+      <% Gallery.first(4).each do |gallery| %>  
+       <%= image_tag rails_blob_url(gallery.thumbnail), class: "margin zoom images"%>
+      <% end %>
+    </div>
+  </div>
+
+    <% if flash[:success].present? %>
+      <div class="alert alert-success">
+        <%= flash[:alert] %>
+      </div>
+      <script>
+      $(document).ready(function(){
+        $('#myButton').trigger('click');
+      });
+      </script>
+    <% end %>
+
+
+<!-- Button trigger modal -->
+<button id="myButton" type="button" class="btn btn-primary invisible" data-toggle="modal" data-target="#exampleModalCenter">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <h5 class="modal-title text-white" id="exampleModalLongTitle">Thankyou!</h5>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Your Message Successfully Sent!</p>
+      </div>
+      <div class="modal-footer">
+        <%= button_to 'OK', services_new_path	, method: :get, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+  </body>
+</html>

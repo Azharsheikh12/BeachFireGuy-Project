@@ -1,0 +1,183 @@
+<style>
+.carousel-control-prev, .carousel-control-next {
+    position: absolute;
+    top: 120px;
+    bottom: 0;
+    z-index: 1;
+    width: 55px;
+    padding: 0;
+    color: black;
+    text-align: center;
+    background: none;
+    border: 0;
+    opacity: 0.5;
+    transition: opacity 0.10s ease;
+    height: 50px;
+    background-color: #d7cdcd ;
+}
+
+.home-demo h2 {
+    color: #FFF;
+    text-align: center;
+    padding: 5rem 0;
+    margin: 0;
+    font-style: italic;
+    font-weight: 300;
+}
+
+.item {
+  text-align: center;
+}
+
+.btn-product_addon{
+    width:100px;
+    height:30px;
+    font-size: 13px;
+    text-align: center;
+    }
+
+    .custom-card{
+      text-align: start;
+      padding: 7px 10px 10px;
+    }
+    .product-price{
+        margin-bottom: 5px;
+    }
+    .owl-carousel .owl-dots.disabled, .owl-carousel .owl-nav.disabled{
+        display: block!important;
+    }
+    .image-box .images{
+        object-fit: cover;
+    }
+
+    .carousel-control-prev, .carousel-control-next{
+      width: 40px!important;
+      height: 40px!important;
+      border-radius: 50%!important;
+      background-color: #1074bc !important;
+      font-size: 30px!important;
+      opacity: 1 !important;
+      top: 110px !important;
+      color: white!important;
+    }
+
+ @media screen and (max-width: 575px) {
+    .btn-product_addon{
+        width:100px;
+        height:30px;
+        font-size: 13px;
+        text-align: center;
+    }
+}
+p{
+    margin-bottom:0.5rem;
+}
+
+</style>
+
+<script>
+function add_to_cart(product_addons_id,cart_id,add,product_type){
+	 $.ajax({
+      url: "/add_to_cart/" + product_addons_id + "/" + cart_id + "/" + product_type,
+      method: 'GET',
+	  dataType: "script",
+      success: function(data) {
+         $('#card-details').html(data);
+        if(add!="add_more"){
+		Swal.fire({
+       icon: 'success',
+	   title: 'Added!',
+       text: 'Your Product has been added!',
+       width:'15em',
+	   timer: 2000,
+	  showConfirmButton: false
+       })}
+      }
+    });
+}
+
+function remove_to_cart(product_addons_id,cart_id,product_type){
+	 $.ajax({
+      url: "/remove_to_cart/" + product_addons_id + "/" + cart_id + "/" + product_type,
+      method: 'GET',
+	  dataType: "script",
+      success: function(data) {
+         $('#card-details').html(data);
+            }
+    });
+}
+function delete_item(product_addons_id,cart_id,product_type){
+	 $.ajax({
+      url: "/delete_item/" + product_addons_id + "/" + cart_id + "/" + product_type,
+      method: 'GET',
+	  dataType: "script",
+      success: function(data) {
+         $('#card-details').html(data);
+           }
+    });
+}
+
+$(function() {
+	var owl = $(".owl-carousel");
+ owl.owlCarousel({
+    autoplay:true,
+    autoplayTimeout:2000,
+    autoplayHoverPause:true,
+    loop:true,
+    margin:10,
+    nav:true,
+    navText: ["<div class='carousel-control-prev'>‹</div>", "<div class='carousel-control-next'>›</div>"],
+ 	dots: false,
+    responsive:{
+        0:{
+            items:2
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:5
+        }
+    }
+  });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<div class="home-demo col-12">
+	<h3 class="mb-3">Product Addons</h3>
+	<div class="owl-carousel owl-theme listing-section">
+
+        <%@product_addons.each do |product_addons|%>
+            <div class="item card product">
+                    <% if product_addons.thumbnail.attached? %>
+                     <div class="image-box">
+                        <%= image_tag rails_blob_url(product_addons.thumbnail), class: "card-img-top img-fluid images",style: "width: 585px; height: 155px;"  %>
+                     </div>
+                    <% else %>
+                     <div class="image-box">
+                        <%= image_tag "client.jpeg", class: "card-img-top img-fluid images",alt: "image",style: "width: 585px; height: 155px;"%>
+                    </div>
+                    <% end %>
+            
+                    <div class="card-body custom-card">
+                        <p class="product-price"><%= product_addons.item %></p>
+                        <p class="product-price">Price: <%= product_addons.price %></p>
+                        <div class="text-center">
+                         <%= button_tag 'Add to cart',class: "btn btn-primary text-white text-decoration-none btn-product_addon" ,onclick:"add_to_cart(#{product_addons.id},#{cart.id},'add','product_addons')"%>					
+                       </div>
+                    </div>
+                </div>
+        <%end%>
+    </div>
+</div>
+
+
+
+
+

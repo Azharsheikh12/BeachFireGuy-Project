@@ -1,0 +1,577 @@
+<div class="slider-wrapper">
+<div class="slider-content">
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://www.101corpuschristi.com/media/cache/articlepage_main/uploads/media/default/0001/18/891e375d4758a612dc949cf1fd4b9e33d0c401d9.jpeg" class="d-block w-100 img-h" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="https://www.esva.net/~daiseys/wordpress/wp-content/uploads/2020/05/IMG_2096-1536x1152.jpg" class="d-block w-100 img-h" alt="...">
+
+    </div>
+    <div class="carousel-item">
+         <img src="https://www.101corpuschristi.com/media/cache/articlepage_main/uploads/media/default/0001/18/891e375d4758a612dc949cf1fd4b9e33d0c401d9.jpeg" class="d-block w-100 img-h" alt="...">
+    </div>
+  </div>
+   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
+<div class="container mb-5 mt-2">
+  <div class="row booking-box">
+    <div class="col-md-7"> </div>
+     <div class="col-md-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h1 class="card-title">Booking</h1>
+           <%= form_with url: "/filter_packages", method: :get do |form| %>
+
+            <div class="form-group">
+            <i class="fa-solid fa-layer-group"></i>
+              <%= form.select :name, options_for_select(Service.all.pluck(:name).map { |key| [key.humanize, key] }),{prompt: 'Select Category', selected: '', disabled: ''}, class: "form-select",required: true %>
+            </div>
+
+            <!-- <div class="form-group">
+            <i class="fa-solid fa-location-dot"></i>
+              <%#= form.select :location_name,options_for_select(ServiceLocation.all.pluck(:location_name).map { |key| [key.humanize, key] }),{prompt: 'Select Beach Location', selected: '', disabled: ''}, class: "form-select", id: 'locations-select' ,required: true%>
+              <%#= link_to 'Check Location Details', '#', id: 'show-location-button', style: 'display: none;', class: "text-decoration-none ml", onclick: "show_location_details()" %>
+            </div> -->
+
+            <div class="form-group">
+            <i class="fa-solid fa-location-dot"></i>
+            <%= form.select :location_name, options_for_select(ServiceLocation.all.pluck(:location_name).map { |key| [key.humanize, key] }), { prompt: 'Select Beach Location', selected: '', disabled: '' }, class: "form-select", id: 'locations-select', required: true %>
+            <%= hidden_field_tag :latitude, '', id: 'latitude' %>
+            <%= hidden_field_tag :longitude, '', id: 'longitude' %>
+            <a href="#" id="show-location-button" style="display: none;" class="text-decoration-none ml">Check Location Details</a>
+            </div>
+
+
+
+        
+
+            <div class="form-group" style="width:106%;">
+              <%= form.date_field :setup_time, selected: Date.today, min: Date.today, max: 2.year.from_now, class: "form-select", required: true, id: 'date-select' %>
+              <%# <%= form.date_field :setup_time, selected: Date.today, min: Date.today, max: 2.year.from_now , class: "form-select" ,required: true , id: 'date-select'  %> 
+            </div>
+            
+             
+            <div class="form-group">
+            <i class="fa-solid fa-clock"></i>
+              <%= form.select :setup_time_slot, options_for_select([], nil),{prompt: 'Select Time-Slot', selected: '', disabled: ''}, class: "form-select", id: 'setup-time-slot-select' %>
+              <%# <%= form.select :setup_time_slot, options_for_select(ServiceLocation.setup_time_slots.keys.map { |key| [key.humanize, key] }), {}, class: "form-select" %>
+            </div>
+
+          <!--  -->
+            <%= link_to 'Check Location Details', '#', id: 'show-location-button', style: 'display: none;', class: "text-decoration-none ml", onclick: "show_location_details()" %>
+
+              
+             <div class="actions" style="margin-top: 20px;">
+              <%= button_to 'Book Now', packages_path, method: :get, class: "btn btn-primary" %>
+            </div> 
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFAgLjtwwWtCBSdsAMoU4VJAmBWoKRLrs&libraries=places&callback=Function.prototype" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.all.min.js"></script>
+    <script src="/assets/owl.carousel.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<style>
+
+.carousel-control-prev, .carousel-control-next{
+  width: 40px!important;
+  height: 40px!important;
+  border-radius: 50%!important;
+  background-color: rgba(0,0,0,.06) !important;
+  font-size: 35px!important;
+  opacity: 1 !important;
+  top: 220px !important;
+  color: white!important;
+    }
+  .carousel-control-next-icon {
+      height: 15px!important;
+      font-size:20px!important;
+  }
+   .carousel-control-prev-icon {
+      height: 15px!important;
+  }
+.ml{
+  text-align: right;
+}
+.footer{
+  margin-top:72px;
+}
+.img-h{
+  height:520px;
+}
+  .card.beach-details .card-body ol {
+    margin: 0;
+    padding: 0 0 0 14px;
+}
+.card.beach-details .card-body ol li {
+    color: #000;
+    line-height: 22px;
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+ .card.beach-details .card-body h3 {
+    font-size: 18px;
+    color: #000;
+    letter-spacing: -0.5px;
+}
+.card.beach-details .card-body h5.card-title {
+    margin: 0 0 3px 0;
+    color: #1074bc;
+    font-size: 24px;
+}
+.card.beach-details .card-body p.card-text {
+    font-size: 14px;
+    color: #000;
+    font-weight: 400;
+}
+
+.card-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+.form-group i{
+  position: absolute;
+  top: 13px;
+  left: 10px;
+}
+
+label {
+  font-weight: bold;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  width: 100%;
+  position: absolute;
+  left: 7px;
+}
+.form-select {
+  padding-left: 30px!important;
+}
+
+.form-select {
+  width: 100%;
+  padding: 8px;
+  font-size: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.slider-wrapper{
+  position:relative;
+}
+.slider-content{
+  position:absolute;
+  top:-8px;
+  width:100%;
+}
+.booking-box{
+  padding-top: 60px;
+}
+
+  .slider-content .img-h{
+    object-fit: cover;
+  }
+@media(max-width: 576px){
+  .slider-content{
+    position: unset;
+  }
+.booking-box{
+  padding-top: 0px;
+  margin-top: -50px;
+}
+.ml {
+      text-align: right;
+}
+}
+.carousel-indicators{
+  display:none;
+}
+a.button:not(.disabled):hover, a.button:link:not(.disabled):hover, a.button:visited:not(.disabled):hover, input[type=submit]:not(.disabled):hover, input[type=button]:not(.disabled):hover, button:not(.disabled):hover {
+    background-color: transparent !important;
+    background-image: none !important;
+}
+ a.button:not(.disabled):active, a.button:link:not(.disabled):active, a.button:visited:not(.disabled):active, input[type=submit]:not(.disabled):active, input[type=button]:not(.disabled):active, button:not(.disabled):active {
+    box-shadow: none !important;
+}
+</style>
+
+
+<script>  
+
+//Shows popup only
+  //  document.addEventListener("DOMContentLoaded", function() {
+  //   const locationsSelect = document.getElementById("locations-select");
+  //   const showLocationButton = document.getElementById("show-location-button");
+
+  //   locationsSelect.addEventListener("change", function() {
+  //     const selectedLocation = locationsSelect.value;
+      
+  //     if (selectedLocation) {
+  //       // Use SweetAlert to show the popup
+  //       Swal.fire({
+  //         title: "Location Details",
+  //         text: `You selected: ${selectedLocation} location.`,
+  //         icon: "info",
+  //         confirmButtonText: "OK"
+  //       });
+  //     }
+  //   });
+  // });
+
+
+
+//shows popup with map init wiht hard coded lat long
+  // document.addEventListener("DOMContentLoaded", function() {
+  //   const locationsSelect = document.getElementById("locations-select");
+  //   const showLocationButton = document.getElementById("show-location-button");
+
+  //   locationsSelect.addEventListener("change", function() {
+  //     const selectedLocation = locationsSelect.value;
+      
+  //     if (selectedLocation) {
+  //       // Create a container for the map
+  //       const mapContainer = document.createElement("div");
+  //       mapContainer.id = "sweet-alert-map";
+  //       mapContainer.style.height = "400px"; // Set your desired height
+  //       mapContainer.style.width = "100%"; // Set your desired width
+
+  //       // Insert the map container into the SweetAlert
+  //       Swal.fire({
+  //         title: "Location Details",
+  //         html: mapContainer, // Insert the map container here
+  //         icon: "info",
+  //         confirmButtonText: "OK",
+  //         onOpen: () => {
+  //           // Initialize the map using the Google Maps API
+  //           const map = new google.maps.Map(mapContainer, {
+  //             center: { lat: 32.684631, lng: -117.170570 }, // Set the initial center of the map
+  //             zoom: 10 // Set the initial zoom level
+  //           });
+
+  //           // Add a marker for the selected location (You can customize this)
+  //           new google.maps.Marker({
+  //             position: { lat: 32.684631, lng: -117.170570 },
+  //             map: map,
+  //             title: selectedLocation // Display the location name as the marker title
+  //           });
+  //         }
+  //       });
+  //     }
+  //   });
+  // });
+
+
+  document.addEventListener("DOMContentLoaded", function() {
+  const locationsSelect = document.getElementById("locations-select");
+  const showLocationButton = document.getElementById("show-location-button");
+  const latitudeField = document.getElementById("latitude");
+  const longitudeField = document.getElementById("longitude");
+
+  locationsSelect.addEventListener("change", function() {
+    const selectedLocation = locationsSelect.value;
+
+    if (selectedLocation) {
+      // Make an AJAX request to fetch the latitude and longitude for the selected location
+      fetch(`/service_locations/lookup?location_name=${selectedLocation}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.latitude && data.longitude) {
+            // Update the hidden fields with the retrieved latitude and longitude
+            latitudeField.value = data.latitude;
+            longitudeField.value = data.longitude;
+
+            // Show the "Check Location Details" button
+            showLocationButton.style.display = "block";
+          } else {
+            alert("Location data not found.");
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          alert("Error fetching location data.");
+        });
+    }
+  });
+
+  showLocationButton.addEventListener("click", function(e) {
+    e.preventDefault();
+
+    const latitude = parseFloat(latitudeField.value);
+    const longitude = parseFloat(longitudeField.value);
+
+    if (isNaN(latitude) || isNaN(longitude)) {
+      alert("Invalid location data.");
+      return;
+    }
+
+    // Create a container for the map (same as previous code)
+    // ...
+
+    // Initialize the map using the Google Maps API with latitude and longitude
+    // ...
+  });
+});
+
+
+
+  document.addEventListener("DOMContentLoaded", function() {
+      const locationsSelect = document.getElementById("locations-select");
+      const showLocationButton = document.getElementById("show-location-button");
+
+      locationsSelect.addEventListener("change", function() {
+        const selectedLocation = locationsSelect.value;
+        
+        if (selectedLocation) {
+          // Replace this with the actual JavaScript object from your ServiceLocation model
+          const selectedLocationData = {
+            latitude: 32.7554906,
+            longitude: -117.2488206558801
+          };
+
+          // Create a container for the map
+          const mapContainer = document.createElement("div");
+          mapContainer.id = "sweet-alert-map";
+          mapContainer.style.height = "400px"; // Set your desired height
+          mapContainer.style.width = "100%"; // Set your desired width
+
+          // Insert the map container into the SweetAlert
+          Swal.fire({
+            title: "Location Details",
+            html: mapContainer, // Insert the map container here
+            icon: "info",
+            confirmButtonText: "OK",
+            onOpen: () => {
+              // Initialize the map using the Google Maps API
+              const map = new google.maps.Map(mapContainer, {
+                center: { lat: selectedLocationData.latitude, lng: selectedLocationData.longitude }, // Use the retrieved latitude and longitude
+                zoom: 10 // Set the initial zoom level
+              });
+
+              // Add a marker for the selected location
+              new google.maps.Marker({
+                position: { lat: selectedLocationData.latitude, lng: selectedLocationData.longitude }, // Use the retrieved latitude and longitude
+                map: map,
+                title: selectedLocation // Display the location name as the marker title
+              });
+            }
+          });
+        }
+      });
+    });
+
+// function initMap(data) {
+//   if (data != null)
+//   { 
+//     var allLocationsMap = new google.maps.Map(document.getElementById("allLocationsMap"), {
+//       center: new google.maps.LatLng(data.latitude,data.longitude),
+//       zoom: 10
+//     });
+  
+   
+//     console.log("allLocationsMap",allLocationsMap)
+//     <% ServiceLocation.all.each do |location| %>
+//       var marker = new google.maps.Marker({
+//         position: new google.maps.LatLng(<%= location.latitude  %>, <%= location.longitude %>),
+//         map: allLocationsMap
+//       });
+//       // Add a click event listener to the marker
+//        marker.addListener("click", function() {
+//         allLocationsMap.setCenter(marker.getPosition());
+//         allLocationsMap.setZoom(12);
+
+//         // Set the content of the info window with the location information, images, and "Get Directions" button
+//         var content = '<div class="card beach-details">' +
+//           '<div class="card-body">' +
+//           '<div class="shadow p-3 mb-5 bg-white rounded">' +
+//           '<h5 class="card-title"><%= location.location_name %></h5>' +
+//           '<p class="card-text"><%=  location.location_details %></p>' +
+//           '<p class="card-text"><%=  location.beach_details.to_s.html_safe %></p>' +
+
+//         // Loop through the images and create <img> elements
+//            '<div class="beach-image">';
+//         <% location.thumbnails.each do |thumbnail| %>
+//           content += '<img src="<%= url_for(thumbnail) %>" style="width: 100%; height: auto; cursor: pointer;" onclick="zoomImage(this)">';
+//         <% end %>
+//         content += '<button onclick="window.open(\'https://www.google.com/maps/dir/Current+Location/<%= location.latitude %>,<%= location.longitude %>\')" class="btn btn-primary mt-2">Get Directions</button>' +
+//           '</div>' +
+//           '</div>' +
+//           '</div>' +
+//           '</div>';
+
+//         var infowindow = new google.maps.InfoWindow({
+//           content: content
+//         });
+
+//         infowindow.open(allLocationsMap, marker); // Open the info window at the marker's position
+//       });
+//      <% end %>
+//   }
+// }
+
+//   // Call initMap when the page finishes loading
+//   window.addEventListener("load", initMap);
+
+//   // Call initMap again when navigating through the navigation bar
+//   document.addEventListener("turbo:load", initMap);
+
+//   if (!sessionStorage.getItem('firstVisit')) {
+//     sessionStorage.setItem('firstVisit', 'true');
+//     location.reload();
+//   }
+
+// //Map popup after select location
+
+// $(document).ready(function() {
+//   $('#locations-select').change(function() {
+//     console.log("map popup")
+//     $('#show-location-button').show();
+//      var selectedLocation = $('#locations-select option:selected').val();
+
+//       // Customize the popup content (you can use any HTML here)
+//       var popupContent = `<h1 class="card-title">Choose a Location on the Map</h1>
+//       <p class="card-text"><small>Explore real images and get directions</small></p><div id="allLocationsMap" style="height: 400px; width:auto;"></div>`;
+
+//     fetch(`/services/search?location_name=${selectedLocation}`, {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//     })
+//    .then(response => response.json())
+//     .then(data => {
+//       data.forEach(result => {
+//          // Show the popup using SweetAlert
+//       Swal.fire({
+//         html: popupContent,
+//         confirmButtonText: 'Close',
+//         didOpen: () => {
+//           initMap(result); // Initialize the map after the popup is opened
+//         }
+//       });
+      
+//       });
+//       resultsContainer.innerHTML += '</ul>';
+//     })
+//     .catch(error => console.error(error));
+//   });
+  
+//   $('#show-location-button').click(function(e) {
+//     e.preventDefault(); // Prevent form submission
+    
+//     var selectedLocation = $('#locations-select option:selected').val();
+//  // Customize the popup content (you can use any HTML here)
+//       var popupContent = `<h1 class="card-title">Choose a Location on the Map</h1>
+//       <p class="card-text"><small>Explore real images and get directions</small></p><div id="allLocationsMap" style="height: 400px; width:100%;"></div>`;
+
+//     fetch(`/services/search?location_name=${selectedLocation}`, {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//     })
+//    .then(response => response.json())
+//     .then(data => {
+//       data.forEach(result => {
+//          // Show the popup using SweetAlert
+//       Swal.fire({
+//         html: popupContent,
+//         confirmButtonText: 'Close',
+//         didOpen: () => {
+//           initMap(result); // Initialize the map after the popup is opened
+//         }
+//       });
+      
+//       });
+//       resultsContainer.innerHTML += '</ul>';
+//     })
+//     .catch(error => console.error(error));
+//    });
+
+// });
+
+    // Initialize the locations array with data from Rails
+    var locations = <%= raw ServiceLocation.all.to_json %>;
+    const dateSelect = document.getElementById('date-select');
+    const setupTimeSlotSelect = document.getElementById('setup-time-slot-select');
+
+  // Define the setup time slots once
+    const setupTimeSlots = ['10:00 am - 10:30 am','11:00 am - 11:30 am','12:00 pm - 12:30 pm', '1:00 pm - 1:30 pm', '2:00 pm - 2:30 pm', '3:00 pm - 3:30 pm', '4:00 pm - 4:30 pm', '5:00 pm - 5:30 pm', '6:00 pm - 6:30 pm', '7:00 pm - 7:30 pm'];
+
+    dateSelect.addEventListener('change', function() {
+    const selectedDate = this.value;
+    console.log("check here man",selectedDate)
+    // Clear the existing options
+    setupTimeSlotSelect.innerHTML = '';
+
+    // Get the current date and time
+    // const currentDate = new Date();
+    // const currentTime = currentDate.getHours() + ':' + ('0' + currentDate.getMinutes()).slice(-2);
+
+    const currentDate = new Date();
+    let hours = currentDate.getHours();
+    let minutes = ('0' + currentDate.getMinutes()).slice(-2);
+    let meridiem = 'AM';
+
+    if (hours > 12) {
+      hours -= 12;
+      meridiem = 'PM';
+    }
+
+    const currentTime = hours + ':' + minutes + ' ' + meridiem;
+
+    // Filter out past time slots if the selected date is today
+    const filteredTimeSlots = (selectedDate === '<%= Date.today.strftime("%Y-%m-%d") %>') ? setupTimeSlots.filter(timeSlot => timeSlot >= currentTime) : setupTimeSlots;
+    console.log("filteredTimeSlots",filteredTimeSlots)
+    // Populate the setup time slot select field with the filtered options
+    filteredTimeSlots.forEach(function(timeSlot) {
+      const option = document.createElement('option');
+      option.value = timeSlot;
+      option.text = timeSlot;
+      setupTimeSlotSelect.add(option);
+    });
+  });
+
+    function zoomImage(imageElement) {
+      imageElement.style.maxHeight = "100vh";
+      imageElement.style.maxWidth = "100%";
+      imageElement.style.position = "absolute";
+      imageElement.style.top = "0";
+      imageElement.style.left = "0";
+      imageElement.style.zIndex = "99999";
+      imageElement.onclick = function() {
+        imageElement.style.maxHeight = "auto";
+        imageElement.style.maxWidth = "100%";
+        imageElement.style.position = "static";
+        imageElement.style.zIndex = "0";
+        imageElement.onclick = function() {
+          zoomImage(imageElement);
+        };
+      };
+    }
+</script>
+
+

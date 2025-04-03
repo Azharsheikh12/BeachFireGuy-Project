@@ -1,0 +1,26 @@
+<div class="image-container" style="position: relative; margin-bottom: 40px;">
+  <%= image_tag("cover.jpg", style: "height: 200px; width: 100%;", class: "img-fluid", alt: "...") %>
+  <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <h1 style="color: black; font-size: 25px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 10px;">Frequently Asked Questions</h1>
+  </div>
+</div>
+
+<div class="container mt-5 pt-5 mb-5">
+<div class="accordion" id="accordionExample">
+  <% @faqs.each_with_index do |faq, index| %>
+    <div class="accordion-item" style>
+      <h2 class="accordion-header" id="heading<%= index + 1 %>">
+        <button class="accordion-button <%= index == 0 ? '' : 'collapsed' %>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= index + 1 %>" aria-expanded="<%= index == 0 ? 'true' : 'false' %>" aria-controls="collapse<%= index + 1 %>">
+          <%= faq.question %>
+        </button>
+      </h2>
+      <div id="collapse<%= index + 1 %>" class="accordion-collapse collapse <%= index == 0 ? 'show' : '' %>" aria-labelledby="heading<%= index + 1 %>" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <strong><%= faq.question %></strong> <%= faq.answer %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+</div>
+
